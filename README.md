@@ -1,6 +1,8 @@
-# file.tel
-<!-- TODO: phone logo -->
+![](https://raw.githubusercontent.com/IGI-111/filetel/master/static/logo.png)
+
 *Simple and secure peer-to-peer file transfer*
+# file.tel
+
 
 Send files securely and quickly directly from one machine to others using a small webpage and a few words.
 
