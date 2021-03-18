@@ -1,11 +1,8 @@
 <template>
   <h1>Upload</h1>
   Code: ${code}<br/>
-  <div if.bind="content === undefined">
-    <input type="text" value.bind="newContent"/>
-    <button click.trigger="setContent(newContent)">set content</button>
-  </div>
-  <div if.bind="content !== undefined">
-    Content: ${content}
+  <div if.bind="uploadingFiles === undefined">
+    <input type="file" files.bind="selectedFiles"/>
+    <button click.trigger="upload(selectedFiles)">Upload</button>
   </div>
 </template>

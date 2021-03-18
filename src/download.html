@@ -4,7 +4,8 @@
     <input type="text" value.bind="newCode"/>
     <button click.trigger="setCode(newCode)">set code</button>
   </div>
-  <div if.bind="content !== undefined">
-    Content: ${content}
+  Progress: ${progress}<br/>
+  <div if.bind="fileURI !== undefined">
+    <a href.bind="fileURI">Save</a>
   </div>
 </template>

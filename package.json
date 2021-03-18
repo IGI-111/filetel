@@ -10,12 +10,14 @@
   "dependencies": {
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.3.3",
-    "p2pt": "^1.5.0"
+    "p2pt": "^1.5.0",
+    "webtorrent": "^0.115.4"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.21",
     "@types/webpack": "^4.41.26",
+    "@types/webtorrent": "^0.109.0",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "app-settings-loader": "^1.0.6",
