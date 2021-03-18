@@ -1,0 +1,10 @@
+<template>
+  <h1>Download</h1>
+  <div if.bind="code === undefined">
+    <input type="text" value.bind="newCode"/>
+    <button click.trigger="setCode(newCode)">set code</button>
+  </div>
+  <div if.bind="content !== undefined">
+    Content: ${content}
+  </div>
+</template>
