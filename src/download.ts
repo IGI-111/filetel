@@ -25,7 +25,6 @@ export class Download {
         });
 
         torrent.on('done', () => {
-          this.progress = torrent.progress;
           torrent.files[0].getBlobURL((err, url) => {
             this.fileURI = url;
           });

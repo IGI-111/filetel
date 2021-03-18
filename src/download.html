@@ -2,10 +2,19 @@
   <h1>Download</h1>
   <div if.bind="code === undefined">
     <input type="text" value.bind="newCode"/>
-    <button click.trigger="setCode(newCode)">set code</button>
+    <button class="button" click.trigger="setCode(newCode)">set code</button>
   </div>
-  Progress: ${progress}<br/>
-  <div if.bind="fileURI !== undefined">
-    <a href.bind="fileURI">Save</a>
+  <div if.bind="code !== undefined">
+    <div if.bind="fileURI === undefined">
+      <div if.bind="progress < 1">
+        <progress class="progress is-large" value.bind="progress" max="1"></progress>
+      </div>
+      <div if.bind="progress === 1">
+        <progress class="progress is-large" max="1"></progress>
+      </div>
+    </div>
+    <div if.bind="fileURI !== undefined">
+      <a class="button" href.bind="fileURI">Save</a>
+    </div>
   </div>
 </template>

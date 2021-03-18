@@ -7,7 +7,6 @@ export class Upload {
   public selectedFiles: FileList;
   private uploadingFiles: FileList;
   private node;
-  private sent = false;
   private code = randomWords(4).join(' '); // this should only be the first part of the secret
 
   public upload(selectedFiles: FileList) {
@@ -20,7 +19,6 @@ export class Upload {
     seeder.seed(file, undefined, (torrent) => {
       this.node = new P2PT(trackers, `cherami-${this.code}`);
       this.node.on('peerconnect', (peer) => {
-        this.sent = true;
         this.node.send(peer, torrent.magnetURI);
       });
       this.node.start();

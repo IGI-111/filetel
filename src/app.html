@@ -1,8 +1,16 @@
 <template>
-  <h1>file.tel</h1>
-  <img src="/logo.svg"/>
-  <hr/>
-  <compose view-model="upload"></compose>
-  <hr/>
-  <compose view-model="download"></compose>
+  <div class="container">
+    <header class="is-centered" style="text-align: center;">
+      <h1>file.tel</h1>
+      <img src="/logo.svg"/>
+    </header>
+    <section>
+      <article>
+        <compose view-model="upload"></compose>
+      </article>
+      <article>
+        <compose view-model="download"></compose>
+      </article>
+    </section>
+  </div>
 </template>
