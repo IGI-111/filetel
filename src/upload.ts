@@ -35,7 +35,7 @@ export class Upload {
     });
   }
   public buildLinkHref(): string {
-    return `${window.location.protocol}${
+    return `${window.location.protocol}//${
       window.location.host
     }/#/${this.code.replace(/ /gi, '/')}`;
   }
