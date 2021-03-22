@@ -14,6 +14,11 @@
   <div if.bind="uploadingFiles !== undefined">
     <h2 style="text-align: center;">Uploading</h2>
     <progress class="progress is-large" max="1"></progress>
-    Open <a href.bind="buildLinkHref()">${buildLinkHref()}</a> on the recipient
+    Open the following link to download the file.<br/>
+    This link will stay valid as long as this page is open.<br/>
+    <a class="is-size-3" href.bind="buildLinkHref()">${buildLinkHref()}</a><br/>
+    <div style="text-align: center;">
+      <compose view-model="qr" model.bind="{ qrText: buildLinkHref() }"></compose>
+    </div>
   </div>
 </template>

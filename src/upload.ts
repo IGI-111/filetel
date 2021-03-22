@@ -16,7 +16,7 @@ export class Upload {
 
     const seeder = new WebTorrent();
 
-    seeder.seed(file, undefined, (torrent) => {
+    seeder.seed(file, { announce: trackers }, (torrent) => {
       this.node = new P2PT(trackers, `cherami-${this.code}`);
       this.node.on('peerconnect', async (peer) => {
         return this.node.send(peer, torrent.magnetURI);

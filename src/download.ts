@@ -19,7 +19,7 @@ export class Download {
     this.node.on('msg', (_peer, msg) => {
       const magnet = msg;
 
-      this.leecher.add(magnet, (torrent: Torrent) => {
+      this.leecher.add(magnet, { announce: trackers }, (torrent: Torrent) => {
         torrent.on('download', (_bytes) => {
           this.progress = torrent.progress;
         });
