@@ -12,12 +12,14 @@
     "aurelia-bootstrapper": "^2.3.3",
     "bulma": "^0.9.2",
     "p2pt": "^1.5.0",
+    "pretty-bytes": "^5.6.0",
     "qrcode": "^1.4.4",
     "webtorrent": "^0.115.4"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.21",
+    "@types/pretty-bytes": "^5.2.0",
     "@types/qrcode": "^1.4.0",
     "@types/webpack": "^4.41.26",
     "@types/webtorrent": "^0.109.0",

@@ -10,12 +10,45 @@
         </span>
       </label>
     </div>
+    or
+    <div class="field has-addons">
+      <div class="control">
+        <input class="input" type="text" placeholder="Type your code to receive a file" value.bind="code"/>
+      </div>
+      <div class="control">
+        <a class="button is-info" href="buildLinkHref()">
+          Receive
+        </a>
+      </div>
+    </div>
   </div>
   <div if.bind="uploadingFiles !== undefined">
     <h2 style="text-align: center;">Uploading</h2>
     <progress class="progress is-large" max="1"></progress>
-    Open the following link to download the file.<br/>
-    This link will stay valid as long as this page is open.<br/>
+    <div if.bind="torrent !== undefined" class="level">
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Peers</p>
+          <p class="title">${torrent.numPeers}</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Upload</p>
+          <p class="title">${prettyBytes(torrent.uploadSpeed)}/s</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Size</p>
+          <p class="title">${prettyBytes(torrent.length)}</p>
+        </div>
+      </div>
+    </div>
+    Your code is<br/>
+    <span class="is-size-3"> ${code}</span><br/>
+    Enter your code on a new page or go to the following address to download the file.<br/>
+    The link and code will stay valid as long as this page is open.<br/>
     <a class="is-size-3" href.bind="buildLinkHref()">${buildLinkHref()}</a><br/>
     <div style="text-align: center;">
       <compose view-model="qr" model.bind="{ qrText: buildLinkHref() }"></compose>

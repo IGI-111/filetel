@@ -2,21 +2,26 @@ import P2PT from 'p2pt';
 import WebTorrent from 'webtorrent';
 import trackers from './trackers';
 import { randomWords } from './wordlist';
+import prettyBytes from 'pretty-bytes';
 
 export class Upload {
   public selectedFiles: FileList;
-  private uploadingFiles: FileList;
+  public uploadingFiles: FileList;
   private node: P2PT;
-  private code = randomWords(4).join(' '); // this should only be the first part of the secret
+  private code: string; // this should only be the first part of the secret
+  private seeder?: WebTorrent.Instance;
+  public torrent?: WebTorrent.Torrent;
 
   public upload(selectedFiles: FileList) {
     this.uploadingFiles = selectedFiles;
 
+    this.code = randomWords(5).join(' ');
+
+    this.seeder = new WebTorrent();
+
     const file = this.uploadingFiles.item(0);
-
-    const seeder = new WebTorrent();
-
-    seeder.seed(file, { announce: trackers }, (torrent) => {
+    this.seeder.seed(file, { announce: trackers }, (torrent) => {
+      this.torrent = torrent;
       this.node = new P2PT(trackers, `cherami-${this.code}`);
       this.node.on('peerconnect', async (peer) => {
         return this.node.send(peer, torrent.magnetURI);
@@ -26,5 +31,8 @@ export class Upload {
   }
   public buildLinkHref(): string {
     return `${window.location.host}/#/${this.code.replace(/ /gi, '/')}`;
+  }
+  public prettyBytes(bytes: number): string {
+    return prettyBytes(bytes);
   }
 }
