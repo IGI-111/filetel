@@ -18,8 +18,8 @@ Send files securely and quickly directly from one machine to others using a smal
 
 ## Inspired by
 
-* Magic Wormhole
-* FilePizza
-* instant.io
-* P2PT
-* webtorrent
+* [Magic Wormhole](https://github.com/magic-wormhole/magic-wormhole)
+* [FilePizza](https://github.com/kern/filepizza)
+* [instant.io](https://instant.io)
+* [P2PT](https://instant.io)
+* [WebTorrent](https://github.com/webtorrent/webtorrent/)
