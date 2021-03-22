@@ -1,26 +1,26 @@
 import P2PT from 'p2pt';
-import WebTorrent from 'webtorrent';
+import WebTorrent, { Torrent } from 'webtorrent';
 import trackers from './trackers';
 
 export class Download {
-  public newCode = '';
   public code = undefined;
-  private node;
+  private node: P2PT;
   public fileURI = undefined;
   public progress = 0;
   private leecher = new WebTorrent();
 
-  public setCode(newCode: string) {
-    this.code = newCode;
+  public activate({ path }: { path: string }) {
+    this.code = path.trim().replace(/\//gi, ' ').toLowerCase();
     this.setupNode();
   }
+
   private setupNode() {
     this.node = new P2PT(trackers, `cherami-${this.code}`);
-    this.node.on('msg', (peer, msg) => {
+    this.node.on('msg', (_peer, msg) => {
       const magnet = msg;
 
-      this.leecher.add(magnet, (torrent) => {
-        torrent.on('download', (bytes) => {
+      this.leecher.add(magnet, (torrent: Torrent) => {
+        torrent.on('download', (_bytes) => {
           this.progress = torrent.progress;
         });
 

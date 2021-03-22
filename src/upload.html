@@ -1,30 +1,19 @@
 <template>
-  <h1>Upload</h1>
-  <div if.bind="uploadingFiles === undefined">
-    <div class="file">
+  <div if.bind="uploadingFiles === undefined" >
+    <div class="file" style="text-align: center;">
       <label class="file-label">
         <input change.trigger="upload(selectedFiles)" files.bind="selectedFiles" class="file-input" type="file" name="resume">
         <span class="file-cta">
           <span class="file-label">
-            Choose a file…
+            Choose a file to transfer…
           </span>
         </span>
       </label>
     </div>
   </div>
   <div if.bind="uploadingFiles !== undefined">
-
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Use code:</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <p class="control">
-          <input class="code-field is-large input" type="text" value.bind="code" readonly style="text-align: center;">
-          </p>
-        </div>
-      </div>
-    </div>
+    <h2 style="text-align: center;">Uploading</h2>
+    <progress class="progress is-large" max="1"></progress>
+    Open <a href.bind="buildLinkHref()">${buildLinkHref()}</a> on the recipient
   </div>
 </template>
