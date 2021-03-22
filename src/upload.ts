@@ -8,9 +8,14 @@ export class Upload {
   public selectedFiles: FileList;
   public uploadingFiles: FileList;
   private node: P2PT;
-  private code: string; // this should only be the first part of the secret
+  private code = ''; // this should only be the first part of the secret
   private seeder?: WebTorrent.Instance;
   public torrent?: WebTorrent.Torrent;
+
+  public redirectToDownload() {
+    this.code = this.code.trim().toLowerCase();
+    window.location.href = this.buildLinkHref();
+  }
 
   public upload(selectedFiles: FileList) {
     this.uploadingFiles = selectedFiles;
@@ -30,7 +35,9 @@ export class Upload {
     });
   }
   public buildLinkHref(): string {
-    return `${window.location.host}/#/${this.code.replace(/ /gi, '/')}`;
+    return `${window.location.protocol}${
+      window.location.host
+    }/#/${this.code.replace(/ /gi, '/')}`;
   }
   public prettyBytes(bytes: number): string {
     return prettyBytes(bytes);

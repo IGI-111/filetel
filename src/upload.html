@@ -16,7 +16,7 @@
         <input class="input" type="text" placeholder="Type your code to receive a file" value.bind="code"/>
       </div>
       <div class="control">
-        <a class="button is-info" href.bind="buildLinkHref()">
+        <a class="button is-info" click.trigger="redirectToDownload()">
           Receive
         </a>
       </div>
@@ -49,7 +49,7 @@
     <span class="is-size-3"> ${code}</span><br/>
     Enter your code on a new page or go to the following address to download the file.<br/>
     The link and code will stay valid as long as this page is open.<br/>
-    <a class="is-size-3" href.bind="buildLinkHref()">${buildLinkHref()}</a><br/>
+    <a class="is-size-3" href.bind="buildLinkHref(code)">${buildLinkHref()}</a><br/>
     <div style="text-align: center;">
       <compose view-model="qr" model.bind="{ qrText: buildLinkHref() }"></compose>
     </div>
