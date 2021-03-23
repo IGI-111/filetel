@@ -4,7 +4,7 @@ import trackers from './trackers';
 import { randomWords } from './wordlist';
 import prettyBytes from 'pretty-bytes';
 
-export class Upload {
+export default class Upload {
   public selectedFiles: FileList;
   public uploadingFiles: FileList;
   private node: P2PT;
@@ -29,7 +29,13 @@ export class Upload {
       this.torrent = torrent;
       this.node = new P2PT(trackers, `cherami-${this.code}`);
       this.node.on('peerconnect', async (peer) => {
-        return this.node.send(peer, torrent.magnetURI);
+        return this.node.send(
+          peer,
+          JSON.stringify({
+            magnet: torrent.magnetURI,
+            fileName: file.name,
+          })
+        );
       });
       this.node.start();
     });

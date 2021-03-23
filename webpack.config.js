@@ -310,7 +310,13 @@ module.exports = (
     ],
   },
   plugins: [
-    ...when(!tests, new DuplicatePackageCheckerPlugin()),
+    ...when(
+      !tests,
+      new DuplicatePackageCheckerPlugin({
+        exclude: (instance) =>
+          ['isarray', 'readable-stream', 'safe-buffer'].includes(instance.name),
+      })
+    ),
     new AureliaPlugin(),
     new ModuleDependenciesPlugin({
       'aurelia-testing': ['./compile-spy', './view-spy'],
