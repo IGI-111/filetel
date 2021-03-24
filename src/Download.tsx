@@ -13,12 +13,11 @@ function Download(props: RouteComponentProps<{ code: string }>) {
     .toLowerCase();
   const [fileName, setFileName] = useState<string>();
   const [torrent, setTorrent] = useState<Torrent>();
+  const [node] = useState<P2PT>(new P2PT(trackers, `cherami-${code}`));
   const [leecher] = useState(new WebTorrent());
   const [fileURI, setFileURI] = useState<string>();
-  const [time, setTime] = useState(0);
 
   useEffect(() => {
-    const node = new P2PT(trackers, `cherami-${code}`); // should we persist it?
     node.on('msg', (_peer, msg) => {
       const { magnet, fileName } = JSON.parse(msg.toString());
       setFileName(fileName);
@@ -35,16 +34,11 @@ function Download(props: RouteComponentProps<{ code: string }>) {
       });
     });
     node.start();
-
-    const timer = setInterval(() => {
-      setTime(Date.now());
-    }, 500);
-
     return () => {
       node.destroy();
-      clearInterval(timer);
+      leecher.destroy();
     };
-  }, []);
+  }, [node, leecher]);
 
   return (
     <Fragment>
@@ -52,15 +46,22 @@ function Download(props: RouteComponentProps<{ code: string }>) {
       {torrent !== undefined && (
         <Fragment>
           <h2 className="has-text-centered">Downloading</h2>
-          {fileURI === undefined && (
-            <DownloadStatus time={time} torrent={torrent} />
-          )}
+          {fileURI === undefined && <DownloadStatus torrent={torrent} />}
           {fileURI !== undefined && (
             <Fragment>
               <div className="has-text-centered">
                 Your file is available:
                 <br />
-                <a className="button mt-1" href={fileURI} download={fileName}>
+                <a
+                  className="button mt-1"
+                  ref={(node) => {
+                    if (node !== null) {
+                      node.click();
+                    }
+                  }}
+                  href={fileURI}
+                  download={fileName}
+                >
                   Save
                 </a>
               </div>
@@ -72,10 +73,21 @@ function Download(props: RouteComponentProps<{ code: string }>) {
   );
 }
 
-function DownloadStatus({ torrent, time }: { time: number; torrent: Torrent }) {
+function DownloadStatus({ torrent }: { torrent: Torrent }) {
+  const [, setTime] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(Date.now());
+    }, 500);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
     <Fragment>
-      <div style={{ display: 'none' }}>{time}</div>
       <progress
         className="progress is-large"
         value={torrent.progress}

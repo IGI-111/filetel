@@ -1,4 +1,4 @@
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import prettyBytes from 'pretty-bytes';
 import trackers from './trackers';
@@ -14,19 +14,17 @@ function Upload(props: RouteComponentProps<{}>) {
   const [seeder] = useState(new WebTorrent());
   const [torrent, setTorrent] = useState<Torrent>();
   const [node, setNode] = useState<P2PT>();
-  const [time, setTime] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(Date.now());
-    }, 500);
+    if (node !== undefined) {
+      node.start();
+    }
     return () => {
       if (node !== undefined) {
         node.destroy();
       }
-      clearInterval(timer);
     };
-  }, []);
+  }, [node]);
 
   const buildRoute = () => {
     return `/${code.trim().replaceAll(' ', '/')}`;
@@ -55,7 +53,6 @@ function Upload(props: RouteComponentProps<{}>) {
     const code = randomWords(5).join(' ');
     setCode(code);
     const node = new P2PT(trackers, `cherami-${code}`);
-    setNode(node);
 
     seeder.seed(file, { announce: trackers }, (torrent) => {
       setTorrent(torrent);
@@ -72,7 +69,7 @@ function Upload(props: RouteComponentProps<{}>) {
           })
         );
       });
-      node.start();
+      setNode(node);
     });
   };
 
@@ -108,9 +105,9 @@ function Upload(props: RouteComponentProps<{}>) {
               />
             </div>
             <div className="control">
-              <a className="button" onClick={redirectToDownload}>
+              <Link to={buildRoute()} className="button">
                 Receive
-              </a>
+              </Link>
             </div>
           </div>
         </Fragment>
@@ -121,28 +118,7 @@ function Upload(props: RouteComponentProps<{}>) {
           {torrent !== undefined && (
             <Fragment>
               <h2 className="has-text-centered">Uploading</h2>
-              <div className="level">
-                <div className="level-item has-text-centered">
-                  <div>
-                    <h4 className="heading">Peers</h4>
-                    <p className="title">{torrent.numPeers}</p>
-                  </div>
-                </div>
-                <div className="level-item has-text-centered">
-                  <div>
-                    <h4 className="heading">Upload</h4>
-                    <p className="title">
-                      {prettyBytes(torrent.uploadSpeed)}/s
-                    </p>
-                  </div>
-                </div>
-                <div className="level-item has-text-centered">
-                  <div>
-                    <h4 className="heading">Size</h4>
-                    <p className="title">{prettyBytes(torrent.length)}</p>
-                  </div>
-                </div>
-              </div>
+              <UploadStatus torrent={torrent} />
               <div className="is-size-3 has-text-centered"> {code}</div>
               Enter your code on a new page or go to the following address to
               download the file.
@@ -165,6 +141,42 @@ function Upload(props: RouteComponentProps<{}>) {
         </Fragment>
       )}
     </Fragment>
+  );
+}
+
+function UploadStatus({ torrent }: { torrent: Torrent }) {
+  const [, setTime] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(Date.now());
+    }, 500);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  return (
+    <div className="level">
+      <div className="level-item has-text-centered">
+        <div>
+          <h4 className="heading">Peers</h4>
+          <p className="title">{torrent.numPeers}</p>
+        </div>
+      </div>
+      <div className="level-item has-text-centered">
+        <div>
+          <h4 className="heading">Upload</h4>
+          <p className="title">{prettyBytes(torrent.uploadSpeed)}/s</p>
+        </div>
+      </div>
+      <div className="level-item has-text-centered">
+        <div>
+          <h4 className="heading">Size</h4>
+          <p className="title">{prettyBytes(torrent.length)}</p>
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -1,5 +1,5 @@
 import './App.scss';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Upload from './Upload';
 import Download from './Download';
 
