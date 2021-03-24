@@ -1,31 +1,26 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "module": "esnext",
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
-    "removeComments": true,
-    "downlevelIteration": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
     "target": "es5",
     "lib": [
-      "es2015",
-      "dom"
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
-    "moduleResolution": "node",
-    "baseUrl": "src",
-    "resolveJsonModule": true,
     "allowJs": true,
-    "allowSyntheticDefaultImports": true
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "test"
-  ],
-  "atom": {
-    "rewriteTsconfig": false
-  }
+    "src"
+  ]
 }

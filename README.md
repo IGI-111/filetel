@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/IGI-111/filetel/master/static/logo.png)
+![](https://raw.githubusercontent.com/IGI-111/filetel/master/public/logo.png)
 
 *Simple and secure peer-to-peer file transfer*
 # file.tel

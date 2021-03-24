@@ -1,3 +1,5 @@
+/// <reference types="react-scripts" />
+
 declare module 'p2pt' {
   import { Instance } from 'parse-torrent';
   interface Peers {}
