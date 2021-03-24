@@ -7,7 +7,7 @@
 
 Send files securely and quickly directly from one machine to others using a small webpage and a few words.
 
-[file.tel](file.tel) allows you to create an ephemeral and easy to type link to transfer files securely from one machine to the other without having to upload them anywhere.
+[file.tel](https://file.tel) allows you to create an ephemeral and easy to type link to transfer files securely from one machine to the other without having to upload them anywhere.
 
 ## How it works
 
